@@ -4,11 +4,11 @@ def get_essential_primes(b):
     primes = set()
     non_primes = set()
 
-    for i in range(2, b):
+    for i in range(2, int(np.sqrt(b))+1):
         if i in non_primes:
             continue
         primes.add(i)
-        for j in range(i**2, b, i):
+        for j in range(i**2, int(np.sqrt(b))+1, i):
             non_primes.add(j)
             
     return primes
