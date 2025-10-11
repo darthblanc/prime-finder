@@ -9,7 +9,6 @@ r = redis.Redis()
 
 def worker(name):
     print(f"{datetime.datetime.now()}: Worker: ({name}) started running")
-    memory = {}
 
     while True:
         task_data = r.brpop("primes:tasks")[1]
