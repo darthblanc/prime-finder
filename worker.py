@@ -34,6 +34,9 @@ def worker(name):
 
 if "__main__" == __name__:
     try:
-        worker(sys.argv[1])
+        if len(sys.argv) == 2:
+            worker(sys.argv[1])
+        else:
+            worker("Worker")
     except Exception as e:
         raise Exception(f"panic: {e}")
