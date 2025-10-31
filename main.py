@@ -6,6 +6,7 @@ import datetime
 from prime import get_essential_primes
 from cast import as_int
 import numpy as np
+import uuid
 
 if "__main__" == __name__:
     r = redis.Redis()
@@ -22,17 +23,20 @@ if "__main__" == __name__:
         
         if start >= end:
             raise RuntimeError("there are no primes within the range selected")
-
-        task_id = datetime.datetime.now()
+        
+        task_id = uuid.uuid4()
 
         essential_primes = get_essential_primes(end)
         essential_primes_json = jsonify_essential_primes(essential_primes)
 
         r.publish("init", essential_primes_json)
+        print(f"Sending essential primes for task with id: {task_id}")
 
-        print(essential_primes_json)
         for a, b in get_ranges(start, end):
             r.lpush("primes:tasks", jsonify(task_id, a, b))
-            print(f"sending {(a, b)}")
+            print(f"Sending {(a, b)} for task with id: {task_id}")
+        
+        r.lpush("primes:tasks", jsonify(task_id, 0, 0))
+        print(f"END task with id: {task_id}")
 
     r.close()
