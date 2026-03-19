@@ -44,8 +44,8 @@ The distributed design trades single-process simplicity for horizontal scalabili
 
 ```bash
 # Example: search primes from 1 to 10,000,000 with 4 workers
-python3 listener.py 4 &
-python3 worker.py 4 & python3 worker.py 4 & python3 worker.py 4 & python3 worker.py 4 &
+python3 listener.py listener &
+python3 worker.py worker1 & python3 worker.py worker2 & python3 worker.py worker3 & python3 worker.py worker4 &
 python3 main.py 1 10000000
 ```
 
@@ -79,12 +79,12 @@ Open three terminal windows:
 
 **Terminal 1 — Start the aggregator:**
 ```bash
-python3 listener.py <n>
+python3 listener.py <name>
 ```
 
-**Terminal 2+ — Start one or more workers:**
+**Terminal 2+ — Start one or more workers (each with a unique name):**
 ```bash
-python3 worker.py <n>
+python3 worker.py <name>
 ```
 
 **Terminal 3 — Start the initiator:**
@@ -92,7 +92,7 @@ python3 worker.py <n>
 python3 main.py <start> <end>
 ```
 
-Where `<n>` is the number of worker processes and `<start>`/`<end>` define the search range.
+Where `<name>` is a unique identifier for the process and `<start>`/`<end>` define the search range.
 
 ---
 
